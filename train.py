@@ -164,6 +164,24 @@ def main(args):
                 progress_bar.set_postfix(loss_log)
             completed_steps += 1
 
+            if completed_steps % args.save_interval == 0:
+                ckpt_save_dir = f"{args.output_dir}/step{completed_steps}"
+                os.makedirs(ckpt_save_dir, exist_ok=True)
+                accelerator.wait_for_everyone()
+
+                state_dict = accelerator.get_state_dict(model)
+
+                accelerator.unwrap_model(model).save_pretrained(
+                    f"{ckpt_save_dir}",
+                    is_main_process=accelerator.is_main_process,
+                    save_function=accelerator.save,
+                    state_dict=state_dict,
+                )
+
+                accelerator.print(f"Saved model to {ckpt_save_dir}")
+
+                accelerator.wait_for_everyone()
+
         if completed_steps >= args.max_train_steps:
             break
 
@@ -209,5 +227,6 @@ if __name__ == "__main__":
         type=str,
         choices=["zigzag_ring_attn", "dist_flash_attn", "ulysses_attn", "usp_attn", "data_parallel"],
     )
+    args.add_argument("--save_interval", type=int, default=100)
     args.add_argument("--ring_degree", type=int, default=1)
     main(args.parse_args())
