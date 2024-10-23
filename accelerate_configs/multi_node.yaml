@@ -5,8 +5,8 @@ deepspeed_config:
   zero3_init_flag: false
 distributed_type: DEEPSPEED
 downcast_bf16: 'no'
-#num_machines: 4
-#num_processes: 16
+num_machines: 4
+num_processes: 160
 main_training_function: main
 rdzv_backend: c10d
 same_network: false

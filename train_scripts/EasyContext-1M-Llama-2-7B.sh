@@ -31,8 +31,8 @@ train.py \
 --wandb EasyContext \
 --max-train-steps 1000  \
 --learning-rate 2e-5  \
---dataset yaofu/slimpajama-per-source-length-upsample \
---model output/7B_32K_bs_1M_rope_1M_step_1000_lr_2e-5  \
+--dataset /projects/bdao/mtian8/slimpajama-per-source-length-upsample_128k \
+--model /u/mtian8/LLM/model/HF_model/Llama-2-7b-hf  \
 --seq-length 65536 \
 --rope-theta 5000000 \
 --parallel_mode data_parallel

@@ -7,3 +7,6 @@ slimpajama-per-source-length-upsample-131072/
 yaofu_data
 mistral_data
 mistral_data_1M
+core
+data/
+out.out
